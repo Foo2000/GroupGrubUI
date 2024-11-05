@@ -1,75 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { MDBBtn, MDBContainer } from "mdb-react-ui-kit";
-import Home from "./pages/Home";
-import Layout from "./pages/Layout";
-import NoPage from "./pages/NoPage";
-import Login from "./pages/Login";
-import UserDetails from "./pages/UserDetails";
-import OtherUserDetails from "./pages/OtherUserDetails";
-import UserList from "./pages/UserList";
-import ConcertDetails from "./pages/ConcertDetails";
-import ConcertList from "./pages/ConcertList";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+
+import './App.css';
+import FoodProvider from './FoodProvider';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Homepage from "./Homepage";
+import PageNotFound from "./PageNotFound";
+import Login from "./Login";
+import {AuthProvider} from "./FakeAuthContext";
+import ProtectedRoute from "./ProtectedRoute";
+import Group from "./Group";
 
 function App() {
-  const [userId, setUserId] = useState("");
-  const [concertId, setConcertId] = useState("");
-  const [matchedUserIds, setMatchedUserIds] = useState([]);
-  const [otheruUserId, setOtherUserId] = useState("");
-  const [inApp, setInApp] = useState(false);
+    return (
+        <div>
 
-  const resourceUrl = "http://localhost"
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Homepage />} />
+                    <Route path="FoodProvider" element={ <ProtectedRoute><FoodProvider /> </ProtectedRoute>} />
+                    <Route path="homepage" element={<Homepage />} />
+                    <Route path="Login" element={<Login />} />
+                    <Route path="group" element={<ProtectedRoute><Group /></ProtectedRoute>} >
+                        <Route path="participantOrder" element={<p>Here is the hub view for participantOrder</p>}/>
+                    </Route>
+                    <Route path = "*" element={ <ProtectedRoute><PageNotFound /> </ProtectedRoute> }/>
+                </Routes>
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout inApp={inApp}/>}>
-          <Route index element={<Home />} />
-          <Route
-            path="userList"
-            element={
-              <UserList
-                userIds={matchedUserIds}
-                setOtherUserId={setOtherUserId}
-                resourceUrl={resourceUrl}
-              />
-            }
-          />
-          <Route
-            path="userDetails"
-            element={
-              <UserDetails userId={userId} resourceUrl={resourceUrl} />
-            }
-          />
-          <Route
-            path="otherUserDetails"
-            element={
-              <OtherUserDetails userId={otheruUserId} resourceUrl={resourceUrl} />
-            }
-          />
-          <Route
-            path="concertList"
-            element={<ConcertList setConcertId={setConcertId} resourceUrl={resourceUrl} />}
-          />
-          <Route
-            path="concertDetails"
-            element={
-              <ConcertDetails
-                concertId={concertId}
-                userId={"2f549ace-7ce8-466e-b9c4-b973f2bb69bc"}
-                setMatchedUserIds={setMatchedUserIds}
-                resourceUrl={resourceUrl}
-              />
-            }
-          />
-          <Route path="login" element={<Login userId={userId} setUserId={setUserId} setInApp={setInApp} resourceUrl={resourceUrl}/>} />
-          <Route path="*" element={<NoPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+            </BrowserRouter>
+        </AuthProvider>
+        </div>
+    )
 }
-
 export default App;
