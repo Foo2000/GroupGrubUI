@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import {useAuth} from "../FakeAuthContext";
 
 function PageNav(){
-    const {isAuthenticated, logout}  =useAuth();
+    const {isAuthenticated, logout, user}  =useAuth();
     const navigate = useNavigate();
     function handleLogout(){
         logout();
@@ -22,6 +22,14 @@ function PageNav(){
                     </li>
                     <li>
                         <Link to="/Group">Group</Link>
+                    </li>
+                    <li>
+                        {isAuthenticated && user && user.participantID ? (
+                            <Link to={`/participant/${user.participantID}`}>Participant</Link>
+                        ):(
+                            <Link to="/login">Participant</Link>
+                        )}
+
                     </li>
                     <li>
                         {isAuthenticated ? (

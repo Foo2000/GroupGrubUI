@@ -1,4 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
+import { jwtDecode } from "jwt-decode";
+import axios from 'axios';
+import { resourceUrl } from './config';
 
 const AuthContext = createContext();
 
@@ -18,22 +21,28 @@ function reducer(state, action) {
     }
 }
 
-const FAKE_USER = {
-    name: "Jack",
-    email: "jack@example.com",
-    password: "qwerty",
-    avatar: "https://i.pravatar.cc/100?u=zz",
-};
-
 function AuthProvider({ children }) {
-    const [{ user, isAuthenticated }, dispatch] = useReducer(
-        reducer,
-        initialState
-    );
+    const [{ user, isAuthenticated }, dispatch] = useReducer(reducer, initialState);
 
-    function login(email, password) {
-        if (email === FAKE_USER.email && password === FAKE_USER.password)
-            dispatch({ type: "login", payload: FAKE_USER });
+    async function login(token) {
+        try {
+            const decodedUser = jwtDecode(token);
+
+            const response = await axios.post(
+                `${resourceUrl}/participants`,
+                { name: decodedUser.name }
+            );
+
+            if (response.status === 201) {
+                const participantID = response.data.participantID;
+                const userWithID = { ...decodedUser, participantID };
+                dispatch({ type: "login", payload: userWithID });
+            } else {
+                console.error("Failed to get participantID from backend");
+            }
+        } catch (error) {
+            console.error("Failed to login:", error);
+        }
     }
 
     function logout() {
