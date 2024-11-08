@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PageNav from "./components/PageNav";
+import PageNav from "../components/PageNav";
 import axios from "axios";
 
 function FoodProvider() {

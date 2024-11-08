@@ -1,5 +1,5 @@
 import {Link, Outlet} from "react-router-dom";
-import PageNav from "./components/PageNav";
+import PageNav from "../components/PageNav";
 
 
 export default function Group() {
