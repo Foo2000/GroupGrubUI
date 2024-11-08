@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PageNav from "../components/PageNav";
 import axios from "axios";
 
-function FoodProvider() {
+function FoodProviders() {
     const [users, setUsers] = useState([]);
     const [view, setView] = useState("");
     const [menuItems, setMenuItems] = useState([]);
@@ -59,7 +59,7 @@ function FoodProvider() {
 
         <div>
             <PageNav />
-            <h2>Food Provider</h2>
+            <h2>Food Providers</h2>
             <div>
                 <button onClick={()=>setView("signup")}>Sign Up for New Food Provider</button>
                 <button onClick={()=>setView("allInfo")}>Available Food Provider</button>
@@ -178,4 +178,4 @@ function FoodProvider() {
     );
 }
 
-export default FoodProvider;
+export default FoodProviders;
