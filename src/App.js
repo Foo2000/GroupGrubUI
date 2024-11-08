@@ -8,6 +8,7 @@ import Login from "./Login";
 import {AuthProvider} from "./FakeAuthContext";
 import ProtectedRoute from "./ProtectedRoute";
 import Group from "./Group";
+import Participant from "./Participant";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Homepage />} />
                     <Route path="FoodProvider" element={ <ProtectedRoute><FoodProvider /> </ProtectedRoute>} />
+                    <Route path="participant/:participantID" element={<ProtectedRoute><Participant/></ProtectedRoute>} />
                     <Route path="homepage" element={<Homepage />} />
                     <Route path="Login" element={<Login />} />
                     <Route path="group" element={<ProtectedRoute><Group /></ProtectedRoute>} >
