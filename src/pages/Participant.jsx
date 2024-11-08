@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import { useAuth } from "./FakeAuthContext";
-import PageNav from "./components/PageNav";
+import { useAuth } from "../FakeAuthContext";
+import PageNav from "../components/PageNav";
 
 export default function Participant() {
     const { participantID } = useParams();

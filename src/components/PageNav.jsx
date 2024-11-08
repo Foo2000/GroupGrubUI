@@ -8,7 +8,7 @@ function PageNav(){
     const navigate = useNavigate();
     function handleLogout(){
         logout();
-        navigate("/login");
+        navigate("/");
     }
     return(
         <div>
@@ -16,29 +16,14 @@ function PageNav(){
                 <Logo />
 
                 <ul>
-
-                    <li>
-                        <Link to="/FoodProvider">FoodProvider</Link>
-                    </li>
-                    <li>
-                        <Link to="/Group">Group</Link>
-                    </li>
-                    <li>
-                        {isAuthenticated && user && user.participantID ? (
-                            <Link to={`/participant/${user.participantID}`}>Participant</Link>
-                        ):(
-                            <Link to="/login">Participant</Link>
-                        )}
-
-                    </li>
-                    <li>
-                        {isAuthenticated ? (
-                            <button onClick={handleLogout}>Logout</button>
-                        ):(
-                            <Link to="/login">Login</Link>
-                        )}
-
-                    </li>
+                    <li><Link to="/foodproviders">FoodProviders</Link></li>
+                    {isAuthenticated && user && user.participantID && (
+                        <>
+                        <li><Link to="/groups">Groups</Link></li>
+                        <li><Link to={`/participant/${user.participantID}`}>My Profile</Link></li>
+                        <li><button onClick={handleLogout}>Logout</button></li>
+                        </>
+                    )}
                 </ul>
             </nav>
 
