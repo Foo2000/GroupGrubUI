@@ -24,9 +24,8 @@ const Homepage = () => {
         }
     }, [isAuthenticated, navigate, user]);
 
-    // Function to handle the "Order now" button click
     const handleOrderNowClick = () => {
-        navigate('/foodproviders');  // Redirects to /foodproviders
+        navigate('/foodproviders');
     };
 
     return (
@@ -46,62 +45,62 @@ const Homepage = () => {
                 </div>
                 <FlexContainer>
                     <MainImage src={mainImage}/>
-                    <ContainerRight>
+                    <Container>
                         <Header1 text="GroupGrub"/>
                         <Slogan>Easy Ordering, Together.</Slogan>
                         <FoodProviderSearch/>
-                    </ContainerRight>
+                    </Container>
                 </FlexContainer>
             </TopSection>
             <Section style={{padding:'3rem'}}>
                 <Header2 text="Group Orders Made Easy" style={{ textAlign:'center' }}/>
                 <FlexContainer style={{justifyContent:'space-around', padding:'2rem 10rem'}}>
-                    <ContainerRight>
+                    <Container>
                         <Image src={phones}/>
                         <Header2 text="Individual Orders" style={{ fontSize:'1.75rem' }}/>
                         <Description>
                             Users place their individual food orders on their phones. 
                             Each participant adds their order to a shared group order, ensuring the administrator has access to everyone's choices in one place, without any hassle.
                         </Description>
-                    </ContainerRight>
-                    <ContainerRight>
+                    </Container>
+                    <Container>
                         <Image src={foodorder} style={{width:'32%'}}/>
                         <Header2 text="One Takeout" style={{ fontSize:'1.75rem' }}/>
                         <Description>
                             Once all participants have added their orders, the administrator reviews and submits the final group order. The final order includes all individual customizations, 
                             ensuring every participant’s specific needs are met in one seamless submission to the food provider.
                         </Description>
-                    </ContainerRight>
+                    </Container>
                 </FlexContainer>
             </Section>
             <Section style={{padding:'3rem', backgroundColor: 'white'}}>
                 <Header2 text="Why You'll Love Us" style={{ textAlign:'center' }}/>
                 <FlexContainer style={{justifyContent:'space-around', padding:'2rem'}}>
-                    <ContainerRight>
+                    <Container>
                         <Image src={foodbank1} style={{ width:'80%' }}/>
-                    </ContainerRight>
-                    <ContainerRight style={{ width: '40%' }}>
+                    </Container>
+                    <Container style={{ width: '40%' }}>
                         <Header2 text="Feeding Communities Together" style={{ fontSize:'2rem', textAlign:'center' }}/>
                         <Description style={{ width: '80%' }}>
                             This service makes it easier for shelters and donors to provide personalized meals to the homeless, 
                             ensuring that everyone in need gets food that fits their dietary requirements while minimizing waste.
                         </Description>
                         <DefaultButton text="Order now" onClick={handleOrderNowClick}/>
-                    </ContainerRight>
+                    </Container>
                 </FlexContainer>
             </Section>
             <Section style={{padding:'3rem'}}>
                 <FlexContainer style={{justifyContent:'space-around', flexDirection:'row-reverse', padding:'2rem', bottom:'1rem'}}>
-                    <ContainerRight>
+                    <Container>
                         <Image src={foodbank2} style={{ width:'80%' }}/>
-                    </ContainerRight>
-                    <ContainerRight style={{ width: '40%' }}>
+                    </Container>
+                    <Container style={{ width: '40%' }}>
                         <Header2 text="Disaster Relief Made Easy" style={{ fontSize:'2rem', textAlign:'center' }}/>
                         <Description style={{ width: '90%' }}>
                             This service streamlines meal delivery to disaster-affected areas, quickly connecting relief organizations with the food communities need to support recovery efforts and minimize waste.
                         </Description>
                         <DefaultButton text="Order now" onClick={handleOrderNowClick}/>
-                    </ContainerRight>
+                    </Container>
                 </FlexContainer>
             </Section>
             <Footer/>
@@ -153,7 +152,7 @@ const Slogan = styled.p`
 	margin:1rem;
 `;
 
-const ContainerRight = styled.div`
+const Container = styled.div`
 	display:flex;
 	width:50vw;
 	justify-content:center;
