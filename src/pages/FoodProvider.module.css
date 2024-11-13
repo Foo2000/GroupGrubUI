@@ -1,6 +1,8 @@
-/* Container for the restaurant description */
-
-.restaurant {
+:root {
+    --break-point-tablet-lg: 768px;
+    --break-point-phone: 480px;
+}
+.restaurant_info {
     max-width: 591px;
     max-height: 208px;
     padding: 20px;
@@ -11,7 +13,14 @@
     font-family: Arial, sans-serif;
     text-align: center;
 }
-
+.menu_list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 .menu_items {
     max-width: calc(100vw - 146px);
     padding: 20px;

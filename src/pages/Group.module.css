@@ -1,17 +1,30 @@
-
-
-.restaurant {
+.container {
+    position: relative;
+}
+.group_info {
     max-width: 591px;
     max-height: 208px;
     padding: 20px;
-    background-color: #fbe8d3; /* Light background color for the box */
+    background-color: #fbe8d3;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 182px;
     font-family: Arial, sans-serif;
     text-align: center;
 }
-
+.btn_position{
+    position: absolute;
+    top:0px;
+    right: 16px;
+}
+.menu_list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 .menu_items {
     max-width: calc(100vw - 146px);
     padding: 20px;

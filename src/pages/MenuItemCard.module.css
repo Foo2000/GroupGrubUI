@@ -1,0 +1,60 @@
+:root {
+    --break-point-phone: 480px;
+}
+
+.menuItemCard {
+    --height: 367px;
+    height: var(--height);
+    width: 100%;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.menuItemCard:hover {
+    transform: scale(1.02);
+}
+
+@media (max-width: var(--break-point-phone)) {
+    .menuItemCard {
+        --height: 330px;
+        padding: 12px;
+    }
+}
+
+.menuItemCardImg {
+    height: calc(var(--height) * 0.5);
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 12px;
+}
+
+.menuItemCardName {
+    margin: 8px 0 4px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.menuItemCardDescription {
+    font-size: 14px;
+    color: #757575;
+    margin-bottom: 8px;
+}
+
+.menuItemCardCost {
+    font-size: 16px;
+    color: #ff5722;
+    background-color: #fff3e0;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-weight: bold;
+}

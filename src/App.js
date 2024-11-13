@@ -10,6 +10,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Group from "./pages/Group";
 import Groups from "./pages/Groups";
 import Participant from "./pages/Participant";
+import JoinGroupForm from "./pages/JoinGroupForm";
 
 function App() {
     return (
@@ -20,7 +21,8 @@ function App() {
                     <Route path="/" element={<Homepage />} />
                     <Route path="participant/:participantID" element={<ProtectedRoute><Participant/></ProtectedRoute>} />
                     <Route path="groups" element={ <ProtectedRoute><Groups /> </ProtectedRoute>} />
-                    <Route path="group" element={<ProtectedRoute><Group /></ProtectedRoute>} />
+                    <Route path="group/:uuid"  element={<Group />} />
+                    <Route path="/form" element={<JoinGroupForm />} />
                     <Route path="foodproviders" element={ <FoodProviders /> } />
                     <Route path="foodprovider/:uuid" element={ <FoodProvider /> } />
                     <Route path = "*" element={ <ProtectedRoute><PageNotFound /> </ProtectedRoute> }/>
