@@ -16,6 +16,7 @@ function Group() {
 
 
 
+
     const navigate = useNavigate();
     const handleJoinGroup = () => {
         navigate(`/form`, {state: {groupData, mode :"join"}});
@@ -26,6 +27,12 @@ function Group() {
     const handleOrderFromFoodProvider = ()=>{
         navigate(`/foodproviders`);
     }
+    const handleRemoveOrder = (participantOrderId) => {
+        setParticipantOrderIds(prevOrders =>
+            prevOrders.filter(id=> id !== participantOrderId)
+        );
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,13 +84,15 @@ function Group() {
                 participantOrderIds.map(orderId =>
                     fetch(`http://localhost:8081/participants?participantsOrderIdFilter=${orderId}`)
                         .then(response => response.json())
+                        .then(data => data[0])
                 )
             )
-                .then(data => setParticipantsData(data[0]))
+                .then(data => setParticipantsData(data))
                 .catch(error => console.error("Error fetching participant data:", error));
         }
 
     },[participantOrderIds])
+    console.log("participant", participantsData);
 
 
 
@@ -100,7 +109,7 @@ function Group() {
                 <div className={styles.group_info}>
                     <h1>{groupData.name}</h1>
                     <p>Administrator ID: {groupData.administratorID}</p>
-                    {location.state.newJoin && <button className="btn btn-warning btn-rounded" onClick={handleOrderFromFoodProvider}>Order from FoodProvider</button>}
+                    {location.state?.newJoin && <button className="btn btn-warning btn-rounded" onClick={handleOrderFromFoodProvider}>Order from FoodProvider</button>}
                 </div>
                 <div className={`d-grid gap-2 d-md-flex justify-content-md-end  ${styles.btn_position}`}>
 
@@ -138,6 +147,7 @@ function Group() {
                                         participantOrderId={order.participantOrderID}
                                         count={Object.keys(order.menuItemIDs).length}
                                         totalPrice={totalPrice}
+                                        handleRemove = {handleRemoveOrder}
                                     />
 
 
