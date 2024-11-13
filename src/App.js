@@ -20,7 +20,7 @@ function App() {
                     <Route path="/" element={<Homepage />} />
                     <Route path="participant/:participantID" element={<ProtectedRoute><Participant/></ProtectedRoute>} />
                     <Route path="groups" element={ <ProtectedRoute><Groups /> </ProtectedRoute>} />
-                    <Route path="group" element={<ProtectedRoute><Group /></ProtectedRoute>} />
+                    <Route path="group/:groupID" element={<ProtectedRoute><Group /></ProtectedRoute>} />
                     <Route path="foodproviders" element={ <FoodProviders /> } />
                     <Route path="foodprovider" element={ <FoodProvider /> } />
                     <Route path = "*" element={ <ProtectedRoute><PageNotFound /> </ProtectedRoute> }/>

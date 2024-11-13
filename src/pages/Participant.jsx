@@ -11,9 +11,9 @@ export default function Participant() {
 
     const fetchData = async () => {
         try {
-          const participantResponse = await fetch(`${resourceUrl}/participants/${participantID}`);
-          const participantData = await participantResponse.json();
-          setParticipantOrders(participantData.participantOrders);
+          const response = await fetch(`${resourceUrl}/participants/${participantID}`);
+          const data = await response.json();
+          setParticipantOrders(data.participantOrders);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -32,7 +32,7 @@ export default function Participant() {
 
             <h2>Participant Orders</h2>
             <hr/>
-            {participantOrders.length > 0 ? (
+            {participantOrders.length > 0 && (
                 participantOrders.map((order) => (
                     <div key={order.participantOrderID} style={{ marginBottom: '20px' }}>
                         <p><strong>Order ID:</strong> {order.participantOrderID}</p>
@@ -48,8 +48,6 @@ export default function Participant() {
                         <hr/>
                     </div>
                 ))
-            ) : (
-                <p>No orders found for this participant.</p>
             )}
         </div>
     );
