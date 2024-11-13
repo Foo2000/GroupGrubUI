@@ -14,6 +14,7 @@ import { useState } from 'react';
 
 function App() {
     const [sessionGroupId, setSessionGroupId] = useState('');
+    const [sessionGroupOrderId, setSessionGroupOrderId] = useState('');
     return (
         <div>
         <AuthProvider>
@@ -22,9 +23,9 @@ function App() {
                     <Route path="/" element={<Homepage />} />
                     <Route path="participant/:participantID" element={<ProtectedRoute><Participant/></ProtectedRoute>} />
                     <Route path="groups" element={ <ProtectedRoute><Groups /> </ProtectedRoute>} />
-                    <Route path="group/:groupID" element={<ProtectedRoute><Group setSessionGroupId={setSessionGroupId}/></ProtectedRoute>} />
+                    <Route path="group/:groupID" element={<ProtectedRoute><Group setSessionGroupId={setSessionGroupId} setSessionGroupOrderId={setSessionGroupOrderId}/></ProtectedRoute>} />
                     <Route path="foodproviders" element={ <FoodProviders /> } />
-                    <Route path="foodprovider/:foodProviderID" element={ <FoodProvider sessionGroupId={sessionGroupId}/> } />
+                    <Route path="foodprovider/:foodProviderID" element={ <FoodProvider sessionGroupId={sessionGroupId} sessionGroupOrderId={sessionGroupOrderId}/> } />
                     <Route path = "*" element={ <ProtectedRoute><PageNotFound /> </ProtectedRoute> }/>
                 </Routes>
 

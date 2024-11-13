@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { resourceUrl } from "../config";
 import React, { useState, useEffect } from "react";
 
-export default function Group({ setSessionGroupId }) {
+export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
   const { groupID } = useParams();
   const [group, setGroup] = useState();
 
@@ -21,8 +21,9 @@ export default function Group({ setSessionGroupId }) {
     fetchData();
   });
 
-  const handleJoinGroup = () => {
+  const handleJoinGroupOrder = (groupOrderID) => {
     setSessionGroupId(groupID);
+    setSessionGroupOrderId(groupOrderID);
   };
 
   return (
@@ -37,7 +38,6 @@ export default function Group({ setSessionGroupId }) {
           <p>
             <strong>Name:</strong> {group.name}
           </p>
-          <button onClick={handleJoinGroup}>Join Group</button>
           <p>
             <strong>Administrator ID:</strong> {group.administratorID}
           </p>
@@ -56,6 +56,7 @@ export default function Group({ setSessionGroupId }) {
             {group.groupOrderIDs.map((groupOrderID) => (
               <li key={groupOrderID}>
                 <strong>Group Order ID:</strong> {groupOrderID}
+                <button onClick={()=>{handleJoinGroupOrder(groupOrderID)}}>Join Group Order</button>
               </li>
             ))}
           </ul>

@@ -3,7 +3,7 @@ import PageNav from "../components/PageNav";
 import { resourceUrl } from "../config";
 import React, { useState, useEffect } from "react";
 
-export default function FoodProvider({ sessionGroupId }) {
+export default function FoodProvider({ sessionGroupId, sessionGroupOrderId }) {
     const { foodProviderID } = useParams();
     const [foodProvider, setFoodProvider] = useState();
 
@@ -25,7 +25,8 @@ export default function FoodProvider({ sessionGroupId }) {
         <div>
             <PageNav />
             <h1>Food Provider Details</h1>
-            <p>Session Group Id: {sessionGroupId}</p>
+            <p><strong>Session Group Id:</strong> {sessionGroupId}</p>
+            <p><strong>Session Group Order Id:</strong> {sessionGroupOrderId}</p>
             {foodProvider && (
                 <div>
                     <p><strong>ID:</strong> {foodProvider.foodProviderID}</p>
