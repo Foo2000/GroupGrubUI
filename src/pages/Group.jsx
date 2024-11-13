@@ -6,19 +6,34 @@ import React, { useState, useEffect } from "react";
 export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
   const { groupID } = useParams();
   const [group, setGroup] = useState();
+  const [groupOrders, setGroupOrders] = useState({});
 
-  const fetchData = async () => {
+  const fetchGroupData = async () => {
     try {
       const response = await fetch(`${resourceUrl}/groups/${groupID}`);
       const data = await response.json();
       setGroup(data);
+      data.groupOrderIDs.forEach((groupOrderID) => fetchGroupOrderDetails(groupOrderID));
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching group data:", error);
+    }
+  };
+
+  const fetchGroupOrderDetails = async (groupOrderID) => {
+    try {
+      const response = await fetch(`${resourceUrl}/groups/${groupID}/orders/${groupOrderID}`);
+      const orderData = await response.json();
+      setGroupOrders((prevOrders) => ({
+        ...prevOrders,
+        [groupOrderID]: orderData
+      }));
+    } catch (error) {
+      console.error("Error fetching group order details:", error);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchGroupData();
   });
 
   const handleJoinGroupOrder = (groupOrderID) => {
@@ -56,7 +71,25 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
             {group.groupOrderIDs.map((groupOrderID) => (
               <li key={groupOrderID}>
                 <strong>Group Order ID:</strong> {groupOrderID}
-                <button onClick={()=>{handleJoinGroupOrder(groupOrderID)}}>Join Group Order</button>
+                <button onClick={() => handleJoinGroupOrder(groupOrderID)}>
+                  Join Group Order
+                </button>
+                {groupOrders[groupOrderID] && (
+                  <div>
+                    <p><strong>Status:</strong> {groupOrders[groupOrderID].status}</p>
+                    <p><strong>Desired Pickup Timeframe:</strong> {groupOrders[groupOrderID].desiredPickupTimeframe}</p>
+                    <p><strong>Food Provider ID:</strong> {groupOrders[groupOrderID].foodProviderID}</p>
+
+                    <h4>Participant Orders</h4>
+                    <ul>
+                      {groupOrders[groupOrderID].participantOrderIDs.map((participantOrderID) => (
+                        <li key={participantOrderID}>
+                          <strong>Participant Order ID:</strong> {participantOrderID}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
