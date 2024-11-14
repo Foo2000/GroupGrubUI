@@ -30,6 +30,16 @@ export default function FoodProvider({ sessionGroupId, sessionGroupOrderId }) {
     };
 
     const handleSubmit = async () => {
+        if (!participantID || !sessionGroupId || !sessionGroupOrderId) {
+            alert("Failed to order! Please log in and join an group order");
+            return;
+        }
+    
+        if (Object.keys(selectedItems).length === 0) {
+            alert("Please select at least one menu item before submitting your order.");
+            return;
+        }
+    
         try {
             const response = await fetch(`${resourceUrl}/participants/${participantID}/orders`, {
                 method: "POST",
