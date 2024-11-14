@@ -1,1 +1,1 @@
-export const resourceUrl = "https://aes-4156-project.nn.r.appspot.com";
+export const resourceUrl = "http://34.75.0.140:8081";
