@@ -8,6 +8,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
   const { groupID } = useParams();
   const [group, setGroup] = useState();
   const [groupOrders, setGroupOrders] = useState({});
+  const [participantOrdersData, setParticipantOrdersData] = useState({});
   const { user } = useAuth();
 
   const fetchGroupData = async () => {
@@ -29,8 +30,27 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
         ...prevOrders,
         [groupOrderID]: orderData
       }));
+
+      orderData.participantOrderIDs.forEach((participantOrderID) => {
+        fetchParticipantOrderDetails(participantOrderID);
+      });
     } catch (error) {
       console.error("Error fetching group order details:", error);
+    }
+  };
+
+  const fetchParticipantOrderDetails = async (participantOrderID) => {
+    try {
+      const response = await fetch(
+        `${resourceUrl}/participants?participantsOrderIdFilter=${participantOrderID}`
+      );
+      const data = await response.json();
+      setParticipantOrdersData((prevData) => ({
+        ...prevData,
+        [participantOrderID]: data,
+      }));
+    } catch (error) {
+      console.error("Error fetching participant order details:", error);
     }
   };
 
@@ -95,17 +115,76 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
                 </button>
                 {groupOrders[groupOrderID] && (
                   <div>
-                    <p><strong>Status:</strong> {groupOrders[groupOrderID].status}</p>
-                    <p><strong>Desired Pickup Timeframe:</strong> {groupOrders[groupOrderID].desiredPickupTimeframe}</p>
-                    <p><strong>Food Provider ID:</strong> {groupOrders[groupOrderID].foodProviderID}</p>
+                    <p>
+                      <strong>Status:</strong>{" "}
+                      {groupOrders[groupOrderID].status}
+                    </p>
+                    <p>
+                      <strong>Desired Pickup Timeframe:</strong>{" "}
+                      {groupOrders[groupOrderID].desiredPickupTimeframe}
+                    </p>
+                    <p>
+                      <strong>Food Provider ID:</strong>{" "}
+                      {groupOrders[groupOrderID].foodProviderID}
+                    </p>
 
                     <h4>Participant Orders</h4>
                     <ul>
-                      {groupOrders[groupOrderID].participantOrderIDs.map((participantOrderID) => (
-                        <li key={participantOrderID}>
-                          <strong>Participant Order ID:</strong> {participantOrderID}
-                        </li>
-                      ))}
+                      {groupOrders[groupOrderID].participantOrderIDs.map(
+                        (participantOrderID) => (
+                          <li key={participantOrderID}>
+                            <strong>Participant Order ID:</strong>{" "}
+                            {participantOrderID}
+                            {participantOrdersData[participantOrderID] && (
+                              <div>
+                                {participantOrdersData[
+                                  participantOrderID
+                                ].map((participant) => (
+                                  <div key={participant.participantID}>
+                                    <p>
+                                      <strong>Participant Name:</strong>{" "}
+                                      {participant.name}
+                                    </p>
+                                    {participant.participantOrders.map(
+                                      (order) => (
+                                        <div
+                                          key={order.participantOrderID}
+                                        >
+                                          <p>
+                                            <strong>Comments:</strong>{" "}
+                                            {order.comments}
+                                          </p>
+                                          <p>
+                                            <strong>Menu Items:</strong>
+                                          </p>
+                                          <ul>
+                                            {Object.entries(
+                                              order.menuItemIDs
+                                            ).map(
+                                              ([
+                                                menuItemID,
+                                                quantity,
+                                              ]) => (
+                                                <li key={menuItemID}>
+                                                  <strong>
+                                                    Menu Item ID:
+                                                  </strong>{" "}
+                                                  {menuItemID}, Quantity:{" "}
+                                                  {quantity}
+                                                </li>
+                                              )
+                                            )}
+                                          </ul>
+                                        </div>
+                                      )
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </li>
+                        )
+                      )}
                     </ul>
                   </div>
                 )}
