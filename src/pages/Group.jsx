@@ -2,11 +2,13 @@ import PageNav from "../components/PageNav";
 import { useParams } from "react-router-dom";
 import { resourceUrl } from "../config";
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../FakeAuthContext";
 
 export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
   const { groupID } = useParams();
   const [group, setGroup] = useState();
   const [groupOrders, setGroupOrders] = useState({});
+  const { user } = useAuth();
 
   const fetchGroupData = async () => {
     try {
@@ -36,9 +38,26 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
     fetchGroupData();
   });
 
-  const handleJoinGroupOrder = (groupOrderID) => {
-    setSessionGroupId(groupID);
-    setSessionGroupOrderId(groupOrderID);
+  const handleJoinGroupOrder = async (groupOrderID) => {
+    try {
+      const groupResponse = await fetch(`${resourceUrl}/groups/${groupID}`);
+      const updatedGroup = await groupResponse.json();
+      if (!updatedGroup.participantIDs.includes(user.participantID)) {
+        updatedGroup.participantIDs.push(user.participantID);
+      }
+      await fetch(`${resourceUrl}/groups/${groupID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedGroup),
+      });
+      
+      setSessionGroupId(groupID);
+      setSessionGroupOrderId(groupOrderID);
+
+      fetchGroupData();
+    } catch (error) {
+      console.error("Error joining group order:", error);
+    }
   };
 
   return (
