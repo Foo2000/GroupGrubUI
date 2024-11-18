@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import DefaultButton from "../components/common/DefaultButton";
 import React, { useState, useEffect } from "react";
 import Header1 from "../components/common/Header1";
-import Header2 from "../components/common/Header2";
+
 
 function Participant() {
     const { participantID } = useParams();
@@ -28,7 +28,7 @@ function Participant() {
         try {
             const response = await fetch(`${resourceUrl}/foodproviders`);
             const data = await response.json();
-            setFoodProviders(data); // Assuming this returns an array of food providers with menu items
+            setFoodProviders(data); 
         } catch (error) {
             console.error("Error fetching food providers data:", error);
         }
@@ -136,7 +136,7 @@ const OrdersContainer = styled.div`
 const OrderContainer = styled.div`
     font-family: "Alexandria", sans-serif;
     background-color: #fff;
-	width:90%;
+	width:80%;
     padding: 1.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #e0e0e0;
