@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../FakeAuthContext";
 import PageNav from "../components/PageNav";
 import { resourceUrl } from "../config";
@@ -6,13 +6,15 @@ import styled from 'styled-components';
 import DefaultButton from "../components/common/DefaultButton";
 import React, { useState, useEffect } from "react";
 import Header1 from "../components/common/Header1";
+import Header2 from "../components/common/Header2";
 
 
-function Participant() {
+function Participant({orderFoodProviderId}) {
     const { participantID } = useParams();
     const { user } = useAuth();
     const [participantOrders, setParticipantOrders] = useState([]);
     const [foodProviders, setFoodProviders] = useState([]);
+	const navigate = useNavigate();
 
     const fetchParticipantData = async () => {
         try {
@@ -32,6 +34,10 @@ function Participant() {
         } catch (error) {
             console.error("Error fetching food providers data:", error);
         }
+    };
+
+	const handleAddToOrderClick = () => {
+        navigate(`/foodprovider/${orderFoodProviderId}`);
     };
 
     useEffect(() => {
@@ -58,12 +64,12 @@ function Participant() {
             <PageNav />
             <Container>
                 <Header>
-                    <Header1 text={`${user?.name}'s orders`} style={{ fontSize:'2.25rem', color:'black', padding:'2rem 2rem', textAlign:'center' }}/>
+                    <Header1 text={user?.name} style={{ fontSize:'2.25rem', color:'black', padding:'2rem 1rem' }}/>
 					<ButtonContainer>
-                        <DefaultButton text="Back" type="remove" />
-                        <DefaultButton text="Add to Order" type="dark" />
+                        <DefaultButton text="Add to Order" type="dark" onClick={handleAddToOrderClick}/>
                 	</ButtonContainer>
                 </Header>
+				<Header2 text="Order History" style={{ fontSize:'2rem', color:'black', textAlign:"center", fontFamily: "Alexandria"}}/>
                 <OrdersContainer>
                     {participantOrders.map(order => (
                         <OrderContainer key={order.participantOrderID}>
@@ -100,7 +106,7 @@ function Participant() {
 
 // Styled Components
 const Container = styled.div`
-    padding: 3rem;
+    padding: 3rem 5rem;
     font-family: 'Roboto', sans-serif;
 `;
 
