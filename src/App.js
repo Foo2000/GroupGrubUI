@@ -26,8 +26,8 @@ function App() {
                     <Route path="groups" element={ <ProtectedRoute><Groups /> </ProtectedRoute>} />
                     <Route path="group/:groupID" element={<ProtectedRoute><Group setSessionGroupId={setSessionGroupId} setSessionGroupOrderId={setSessionGroupOrderId}/></ProtectedRoute>} />
                     <Route path="foodproviders" element={ <FoodProviders /> } />
-                    <Route path="foodprovider/:foodProviderID" element={ <FoodProvider sessionGroupId={sessionGroupId} sessionGroupOrderId={sessionGroupOrderId} 
-						setOrderFoodProviderId={setOrderFoodProviderId}/> } />
+                    <Route path="foodprovider/:foodProviderID" element={ <ProtectedRoute><FoodProvider sessionGroupId={sessionGroupId} sessionGroupOrderId={sessionGroupOrderId} 
+						setOrderFoodProviderId={setOrderFoodProviderId}/> </ProtectedRoute> } />
                     <Route path = "*" element={ <ProtectedRoute><PageNotFound /> </ProtectedRoute> }/>
                 </Routes>
 
