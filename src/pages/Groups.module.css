@@ -1,5 +1,5 @@
 .groupCard {
-    --height: 190px;
+    --height: 170px;
     height: var(--height);
     width: 100%;
     cursor: pointer;
@@ -23,6 +23,14 @@
     font-size: 1.2em;
     font-weight: bold;
     color: #333;
+    text-align: left;
+}
+
+.groupID {
+    margin: 8px 0 4px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #878686;
     text-align: left;
 }
 .container {

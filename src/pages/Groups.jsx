@@ -39,7 +39,7 @@ export default function Groups() {
 
                                         <p className={styles.groupName}>{group.name}</p>
 
-                                        <p className={styles.groupName}>Group ID: {group.groupID}</p>
+                                        <p className={styles.groupID}>Group ID: {group.groupID}</p>
 
                                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                             <Link

@@ -239,7 +239,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
                 ))}
 
 
-                <hr/>
+
               </div>
           )}
         </div>
