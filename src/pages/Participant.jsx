@@ -37,7 +37,12 @@ function Participant({orderFoodProviderId}) {
     };
 
 	const handleAddToOrderClick = () => {
-        navigate(`/foodprovider/${orderFoodProviderId}`);
+		if (orderFoodProviderId!==null && orderFoodProviderId!=="") {
+			navigate(`/foodprovider/${orderFoodProviderId}`);
+		}
+		else{
+			navigate(`/foodproviders`);
+		}
     };
 
     useEffect(() => {
