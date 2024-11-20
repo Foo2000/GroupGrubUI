@@ -1,0 +1,58 @@
+.groupCard {
+    --height: 190px;
+    height: var(--height);
+    width: 100%;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    text-align:left;
+}
+
+.groupCard:hover {
+    transform: scale(1.02);
+}
+
+
+.groupName {
+    margin: 8px 0 4px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    overflow-x: hidden;
+}
+.cardlist {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.title{
+    font-family: 'Mochiy Pop One';
+    font-weight: 400;
+    font-size: 36px;
+    Line-height: 52.13px;
+    align-self: center;
+}
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the body takes up the full viewport height */
+}
+
+.mainContent {
+    flex: 1; /* Makes the main content expand to fill available space */
+}
