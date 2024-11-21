@@ -4,7 +4,7 @@ import { resourceUrl } from "../config";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../FakeAuthContext";
 
-export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
+export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOrderFoodProviderId }) {
   const { groupID } = useParams();
   const [group, setGroup] = useState();
   const [groupOrders, setGroupOrders] = useState({});
@@ -73,6 +73,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
       
       setSessionGroupId(groupID);
       setSessionGroupOrderId(groupOrderID);
+	  setOrderFoodProviderId(groupOrders[groupOrderID].foodProviderID);
 
       fetchGroupData();
     } catch (error) {
