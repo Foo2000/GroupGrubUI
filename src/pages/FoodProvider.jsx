@@ -96,12 +96,13 @@ export default function FoodProvider({ sessionGroupId, sessionGroupOrderId }) {
                         <p><strong>Hours of Operation:</strong> {foodProvider.hoursOfOperation}</p></div>
 
 
-                    <p style={{fontSize: '20px', fontWeight: "bold"}}>Menu Item: </p>
+                    <p className={styles.title}>Menu Item: </p>
                     <div className={styles.menuContainer}>
                         {foodProvider.menu.length > 0 && (
                             foodProvider.menu.map((menuItem) => (
-                                <div className={styles.menu_list}>
+                                <div className={styles.menu_list} >
                                     <MenuItemCard
+                                        key={menuItem.menuItemIDs}
                                         name={menuItem.name}
                                         img={menuItem.image}
                                         description={menuItem.description}
@@ -116,14 +117,14 @@ export default function FoodProvider({ sessionGroupId, sessionGroupOrderId }) {
                             ))
                         )}
                     </div>
-                    <div className={styles.submitContainer}>
+                    <div className={styles.commentContainer}>
                         <label>
                             <p style = {{fontSize: '16px', fontWeight: 'bold'}}>Comments:</p>
                             <textarea value={comments} onChange={(e) => setComments(e.target.value)}/>
                         </label>
 
                     </div>
-                    <div className={styles.submitContainer}>
+                    <div className={styles.btnContainer}>
                         <DefaultButton
                             text="Submit Order"
                             type="remove"

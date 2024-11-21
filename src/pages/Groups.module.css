@@ -1,7 +1,7 @@
 .groupCard {
-    --height: 170px;
+    --height: 180px;
     height: var(--height);
-    width: 100%;
+    width: 115%;
     cursor: pointer;
     background-color: #ffffff;
     border-radius: 8px;
@@ -17,7 +17,10 @@
     transform: scale(1.02);
 }
 
-
+.flex{
+    display:block;
+    margin:auto;
+}
 .groupName {
     margin: 8px 0 4px;
     font-size: 1.2em;
@@ -35,10 +38,12 @@
 }
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 20px;
     padding: 20px;
     overflow-x: hidden;
+    margin-left:4rem;
+    margin-bottom:10rem;
 }
 .cardlist {
     display: grid;
@@ -54,6 +59,7 @@
     font-size: 36px;
     Line-height: 52.13px;
     align-self: center;
+    padding: 5rem 6rem;
 }
 .pageWrapper {
     display: flex;
