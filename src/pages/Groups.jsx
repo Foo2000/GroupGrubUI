@@ -47,7 +47,7 @@ export default function Groups() {
 
 											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
 												<div className="d-grid gap-2 d-md-flex justify-content-md-end">
-													<DefaultButton text="View" style={{ margin:0}} onClick={()=> navigate(`/groups/${group.groupID}`)}/>
+													<DefaultButton text="View" style={{ margin:0}} onClick={()=> navigate(`/group/${group.groupID}`)}/>
 												</div>
 
 											</div>
