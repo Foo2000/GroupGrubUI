@@ -78,7 +78,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
 
   useEffect(() => {
     fetchGroupData();
-  }, []);
+  });
 
   const handleJoinGroupOrder = async (groupOrderID, FoodProviderID) => {
     try {
