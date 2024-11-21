@@ -40,7 +40,7 @@ export default function FoodProviders() {
                                     <p className={styles.foodProviderName}>{foodProvider.name}</p>
                                     <p className={styles.provider_info}>Provider ID: {foodProvider.foodProviderID}</p>
                                     <p className={styles.provider_info}>location: {foodProvider.location}</p>
-                                    <p className={styles.provider_info}>Operation time:{foodProvider.hoursOfOperation
+                                    <p className={styles.provider_info}>Operation time: {foodProvider.hoursOfOperation
                                     }</p>
                                     {isAuthenticated && 
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">

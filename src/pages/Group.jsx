@@ -38,7 +38,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
       }));
       console.log("orderData", orderData);
       //fetch menu data
-      const foodProviderResponse = await axios.get(`http://localhost:8081/foodproviders/${orderData.foodProviderID}`);
+      const foodProviderResponse = await axios.get(`${resourceUrl}/foodproviders/${orderData.foodProviderID}`);
       const foodProviderData = foodProviderResponse.data;
 
       // Create a map of menuItemID to cost for easy lookup
