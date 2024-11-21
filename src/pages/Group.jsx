@@ -1,8 +1,12 @@
 import PageNav from "../components/PageNav";
-import { useParams } from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import { resourceUrl } from "../config";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../FakeAuthContext";
+import styles from "./Group.module.css"
+import axios from "axios";
+import Footer from "../components/common/Footer";
+import Layout from "./Layout.module.css";
 
 export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOrderFoodProviderId }) {
   const { groupID } = useParams();
@@ -10,6 +14,8 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
   const [groupOrders, setGroupOrders] = useState({});
   const [participantOrdersData, setParticipantOrdersData] = useState({});
   const { user } = useAuth();
+  const [costMap, setCostMap] = useState({});
+  const navigate = useNavigate();
 
   const fetchGroupData = async () => {
     try {
@@ -30,6 +36,19 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
         ...prevOrders,
         [groupOrderID]: orderData
       }));
+      console.log("orderData", orderData);
+      //fetch menu data
+      const foodProviderResponse = await axios.get(`${resourceUrl}/foodproviders/${orderData.foodProviderID}`);
+      const foodProviderData = foodProviderResponse.data;
+
+      // Create a map of menuItemID to cost for easy lookup
+      const costMap = {};
+      foodProviderData.menu.forEach(item => {
+        costMap[item.menuItemID] = item.cost;
+
+      });
+      setCostMap(costMap);
+
 
       orderData.participantOrderIDs.forEach((participantOrderID) => {
         fetchParticipantOrderDetails(participantOrderID);
@@ -49,6 +68,9 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
         ...prevData,
         [participantOrderID]: data,
       }));
+      console.log("participantOrdersData", participantOrdersData);
+
+
     } catch (error) {
       console.error("Error fetching participant order details:", error);
     }
@@ -58,7 +80,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
     fetchGroupData();
   });
 
-  const handleJoinGroupOrder = async (groupOrderID) => {
+  const handleJoinGroupOrder = async (groupOrderID, FoodProviderID) => {
     try {
       const groupResponse = await fetch(`${resourceUrl}/groups/${groupID}`);
       const updatedGroup = await groupResponse.json();
@@ -70,10 +92,11 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedGroup),
       });
-      
+
       setSessionGroupId(groupID);
       setSessionGroupOrderId(groupOrderID);
-	  setOrderFoodProviderId(groupOrders[groupOrderID].foodProviderID);
+      setOrderFoodProviderId(groupOrders[groupOrderID].foodProviderID);
+      navigate(`/foodprovider/${ FoodProviderID}`)
 
       fetchGroupData();
     } catch (error) {
@@ -82,119 +105,146 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
   };
 
   return (
-    <div>
-      <PageNav />
-      <h1>Group Details</h1>
-      {group && (
-        <div>
-          <p>
-            <strong>Group ID:</strong> {group.groupID}
-          </p>
-          <p>
-            <strong>Name:</strong> {group.name}
-          </p>
-          <p>
-            <strong>Administrator ID:</strong> {group.administratorID}
-          </p>
+      <div className={Layout.pageWrapper}>
+        <div className={Layout.mainContent}>
+          <PageNav/>
 
-          <h3>Participants</h3>
-          <ul>
-            {group.participantIDs.map((participantID) => (
-              <li key={participantID}>
-                <strong>Participant ID:</strong> {participantID}
-              </li>
-            ))}
-          </ul>
-
-          <h3>Group Orders</h3>
-          <ul>
-            {group.groupOrderIDs.map((groupOrderID) => (
-              <li key={groupOrderID}>
-                <strong>Group Order ID:</strong> {groupOrderID}
-                <button onClick={() => handleJoinGroupOrder(groupOrderID)}>
-                  Join Group Order
-                </button>
-                {groupOrders[groupOrderID] && (
-                  <div>
+          {group && (
+              <div>
+                <div className={styles.container}>
+                  <div className={styles.group_info}>
                     <p>
-                      <strong>Status:</strong>{" "}
-                      {groupOrders[groupOrderID].status}
+                      <strong>Name:</strong> {group.name}
                     </p>
                     <p>
-                      <strong>Desired Pickup Timeframe:</strong>{" "}
-                      {groupOrders[groupOrderID].desiredPickupTimeframe}
+                      <strong>Group ID:</strong> {group.groupID}
                     </p>
                     <p>
-                      <strong>Food Provider ID:</strong>{" "}
-                      {groupOrders[groupOrderID].foodProviderID}
+                      <strong>Administrator ID:</strong> {group.administratorID}
                     </p>
-
-                    <h4>Participant Orders</h4>
-                    <ul>
-                      {groupOrders[groupOrderID].participantOrderIDs.map(
-                        (participantOrderID) => (
-                          <li key={participantOrderID}>
-                            <strong>Participant Order ID:</strong>{" "}
-                            {participantOrderID}
-                            {participantOrdersData[participantOrderID] && (
-                              <div>
-                                {participantOrdersData[
-                                  participantOrderID
-                                ].map((participant) => (
-                                  <div key={participant.participantID}>
-                                    <p>
-                                      <strong>Participant Name:</strong>{" "}
-                                      {participant.name}
-                                    </p>
-                                    {participant.participantOrders.map(
-                                      (order) => (
-                                        <div
-                                          key={order.participantOrderID}
-                                        >
-                                          <p>
-                                            <strong>Comments:</strong>{" "}
-                                            {order.comments}
-                                          </p>
-                                          <p>
-                                            <strong>Menu Items:</strong>
-                                          </p>
-                                          <ul>
-                                            {Object.entries(
-                                              order.menuItemIDs
-                                            ).map(
-                                              ([
-                                                menuItemID,
-                                                quantity,
-                                              ]) => (
-                                                <li key={menuItemID}>
-                                                  <strong>
-                                                    Menu Item ID:
-                                                  </strong>{" "}
-                                                  {menuItemID}, Quantity:{" "}
-                                                  {quantity}
-                                                </li>
-                                              )
-                                            )}
-                                          </ul>
-                                        </div>
-                                      )
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </li>
-                        )
-                      )}
-                    </ul>
                   </div>
-                )}
-              </li>
-            ))}
-          </ul>
-          <hr />
+                </div>
+
+
+                {group.groupOrderIDs.map((groupOrderID) => (
+
+                    <div key={groupOrderID} className={styles.groupOrdersContainer}>
+
+                      <div className={styles.groupOrderHeader}>
+                        <div style={{fontSize: '18px', fontWeight: 'bold'}}>
+                          Group Order ID: {groupOrderID}
+                        </div>
+                        <button className="btn btn-warning btn-rounded"
+                                data-mdb-ripple-init
+                                data-mdb-ripple-color="light"
+                                onClick={() => handleJoinGroupOrder(groupOrderID, groupOrders[groupOrderID].foodProviderID)}>
+                          Join Group Order
+                        </button>
+                      </div>
+                      {groupOrders[groupOrderID] && (
+                          <div>
+                            <div className={styles.status}>
+                              <p>
+                                <strong>Status:</strong>{" "}
+                                {groupOrders[groupOrderID].status}
+                              </p>
+                            </div>
+                            <div className={styles.pickupTimeframe}>
+                              <p>
+                                <strong>Desired Pickup Timeframe:</strong>{" "}
+                                {groupOrders[groupOrderID].desiredPickupTimeframe}
+                              </p>
+                            </div>
+                            <div className={styles.foodProviderID}>
+                              <p>
+                                <strong>Food Provider ID:</strong>{" "}
+                                {groupOrders[groupOrderID].foodProviderID}
+                              </p>
+                            </div>
+
+
+                            <div className={styles.menu_list}>
+
+
+                              {groupOrders[groupOrderID].participantOrderIDs.map((participantOrderID) => (
+                                  <div key={participantOrderID} className={styles.menuItemCard}>
+
+
+                                    {participantOrdersData[participantOrderID] && (
+                                        <div>
+                                          {participantOrdersData[participantOrderID].map((participant) => {
+                                            return participant.participantOrders.map((order, orderIndex) => {
+                                              // Calculate total price for the order
+                                              const totalPrice = Object.entries(order.menuItemIDs).reduce(
+                                                  (sum, [menuItemID, quantity]) => {
+                                                    const itemCost = costMap[menuItemID] * quantity;
+                                                    return sum + itemCost;
+                                                  },
+                                                  0
+                                              );
+                                              //calculate the total quantity menu item ordered by this order
+                                              const itemCount = Object.values(order.menuItemIDs).reduce(
+                                                  (sum, quantity) => sum + quantity,
+                                                  0
+                                              );
+                                              return (
+                                                  <div key={styles.orderCard}>
+                                                    <p className={styles.orderCardName}>
+                                                      <strong>Participant Name:</strong> {participant.name}
+                                                    </p>
+                                                    <p className={styles.orderCardCost}>
+                                                      <strong>Participant ID:</strong> {participant.participantID}
+                                                    </p>
+                                                    <p className={styles.orderCardCost}>
+                                                      <strong>Participant Order
+                                                        ID:</strong> {participantOrderID}
+                                                    </p>
+                                                    <p className={styles.orderCardCost}>
+                                                      <strong>Item Count:</strong> {itemCount}
+                                                    </p>
+                                                    <p className={styles.orderCardCost}>
+                                                      <strong>Total Price:</strong> ${totalPrice.toFixed(2)}
+                                                    </p>
+                                                    <div
+                                                        className="d-grid gap-2 d-md-flex justify-content-md-end">
+
+                                                      <Link
+                                                          to={`/participant/${participant.participantID}`}
+                                                          className="btn btn-warning btn-rounded"
+                                                          data-mdb-ripple-init
+                                                          data-mdb-ripple-color="light"
+                                                      >
+                                                        view
+                                                      </Link>
+                                                    </div>
+
+                                                  </div>
+                                              );
+                                            });
+                                          })}
+                                        </div>
+                                    )}
+
+                                  </div>
+                              ))}
+
+
+                            </div>
+
+
+                          </div>
+                      )}
+
+                    </div>
+                ))}
+
+
+
+              </div>
+          )}
         </div>
-      )}
-    </div>
-  );
-}
+        <Footer/>
+        </div>
+
+        );
+        }

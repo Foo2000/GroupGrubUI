@@ -1,0 +1,10 @@
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the body takes up the full viewport height */
+}
+
+.mainContent {
+    flex: 1; /* Makes the main content expand to fill available space */
+}
+

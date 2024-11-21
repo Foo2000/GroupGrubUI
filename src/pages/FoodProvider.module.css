@@ -1,0 +1,71 @@
+:root {
+    --break-point-tablet-lg: 768px;
+    --break-point-phone: 480px;
+}
+.restaurant_info {
+    max-width: 591px;
+    max-height: 400px;
+    padding: 20px;
+    background-color: #fbe8d3; /* Light background color for the box */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+.menu_list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.menu_items {
+    max-width: calc(100vw - 146px);
+    padding: 20px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    border: 1px #E0E0E0;
+    border-radius: 8px;
+
+}
+.menu_items h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+
+.menuContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.submitContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+textarea {
+    width: 100%;
+    max-width: 500px; /* You can adjust the width as needed */
+    height: 40px;
+    padding: 10px;
+    font-size: 10px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    resize: vertical;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
