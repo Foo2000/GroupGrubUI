@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { resourceUrl } from "../config";
 import PageNav from "../components/PageNav";
 import { Link } from "react-router-dom";
+import { useAuth } from "../FakeAuthContext";
 
 export default function FoodProviders() {
     const [foodProviders, setFoodProviders] = useState([]);
+    const { isAuthenticated } = useAuth();
 
     const fetchData = async () => {
         try {
@@ -29,7 +31,7 @@ export default function FoodProviders() {
                     <div key={foodProvider.foodProviderID} style={{ marginBottom: '20px' }}>
                         <p><strong>Provider ID:</strong> {foodProvider.foodProviderID}</p>
                         <p><strong>Name:</strong> {foodProvider.name}</p>
-                        <Link to={`/foodprovider/${foodProvider.foodProviderID}`}>Check Details</Link>
+                        {isAuthenticated && <Link to={`/foodprovider/${foodProvider.foodProviderID}`}>Check Details</Link>}
                         <hr/>
                     </div>
                 ))
