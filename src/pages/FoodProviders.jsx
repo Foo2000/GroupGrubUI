@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { resourceUrl } from "../config";
 import PageNav from "../components/PageNav";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import styles from "./FoodProviders.module.css";
 import Footer from "../components/common/Footer";
 import Layout from "./Layout.module.css";
 import { useAuth } from "../FakeAuthContext";
+import DefaultButton from "../components/common/DefaultButton";
 
 export default function FoodProviders() {
     const [foodProviders, setFoodProviders] = useState([]);
     const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     const fetchData = async () => {
         try {
@@ -33,7 +35,7 @@ export default function FoodProviders() {
                 <div className={styles.container}>
                     {foodProviders.length > 0 && (
                         foodProviders.map((foodProvider) => (
-                            <div className={styles.cardlist}>
+                            <div className={styles.cardlist} >
 
                                 <div key={foodProvider.foodProviderID} className={styles.foodProviderCard}>
 
@@ -44,14 +46,9 @@ export default function FoodProviders() {
                                     }</p>
                                     {isAuthenticated && 
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <DefaultButton text="View" style={{margin: 0}}
+                                                       onClick={() => navigate(`/foodprovider/${foodProvider.foodProviderID}`)}/>
 
-                                        <Link to={`/foodprovider/${foodProvider.foodProviderID}`}
-                                              className="btn btn-warning btn-rounded"
-                                              data-mdb-ripple-init
-                                              data-mdb-ripple-color="light"
-                                        >
-                                            view
-                                        </Link>
                                     </div>
                                     }
 

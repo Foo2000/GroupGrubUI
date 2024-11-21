@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { resourceUrl } from "../config";
 import PageNav from "../components/PageNav";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import styles from "./Groups.module.css";
 import Footer from "../components/common/Footer";
 import Layout from "./Layout.module.css";
+import DefaultButton from "../components/common/DefaultButton";
 export default function Groups() {
     const [groups, setGroups] = useState([]);
+    const navigate = useNavigate();
 
     const fetchData = async () => {
         try {
@@ -24,9 +26,10 @@ export default function Groups() {
 
     return (
         <div className={Layout.pageWrapper}>
-                <div className={Layout.mainContent}>
-                    <PageNav/>
-                    <h1 className={styles.title}>Groups</h1>
+            <div className={Layout.mainContent}>
+                <PageNav/>
+                <h1 className={styles.title}>Groups</h1>
+                <div className={styles.flex}>
                     <div className={styles.container}>
 
 
@@ -42,24 +45,20 @@ export default function Groups() {
                                         <p className={styles.groupID}>Group ID: {group.groupID}</p>
 
                                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <Link
-                                                to={`/group/${group.groupID}`}
-                                                className="btn btn-warning btn-rounded"
-                                                data-mdb-ripple-init
-                                                data-mdb-ripple-color="light"
-                                            >
-                                                view
-                                            </Link>
+
+                                                <DefaultButton text="View" style={{margin: 0}}
+                                                               onClick={() => navigate(`/group/${group.groupID}`)}/>
+
+                                            </div>
 
                                         </div>
-
                                     </div>
-                                </div>
-                            ))
+                                    ))
                         )}
                     </div>
                 </div>
-        <Footer />
                 </div>
-                );
-                }
+                <Footer/>
+            </div>
+            );
+            }

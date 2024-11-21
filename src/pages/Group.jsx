@@ -7,6 +7,8 @@ import styles from "./Group.module.css"
 import axios from "axios";
 import Footer from "../components/common/Footer";
 import Layout from "./Layout.module.css";
+import DefaultButton from "../components/common/DefaultButton";
+import styled from "styled-components";
 
 export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOrderFoodProviderId }) {
   const { groupID } = useParams();
@@ -36,7 +38,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
         ...prevOrders,
         [groupOrderID]: orderData
       }));
-      console.log("orderData", orderData);
+
       //fetch menu data
       const foodProviderResponse = await axios.get(`${resourceUrl}/foodproviders/${orderData.foodProviderID}`);
       const foodProviderData = foodProviderResponse.data;
@@ -68,7 +70,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
         ...prevData,
         [participantOrderID]: data,
       }));
-      console.log("participantOrdersData", participantOrdersData);
+
 
 
     } catch (error) {
@@ -78,7 +80,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
 
   useEffect(() => {
     fetchGroupData();
-  });
+  }, []);
 
   const handleJoinGroupOrder = async (groupOrderID, FoodProviderID) => {
     try {
@@ -96,7 +98,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
       setSessionGroupId(groupID);
       setSessionGroupOrderId(groupOrderID);
       setOrderFoodProviderId(groupOrders[groupOrderID].foodProviderID);
-      navigate(`/foodprovider/${ FoodProviderID}`)
+      navigate(`/foodprovider/${FoodProviderID}`)
 
       fetchGroupData();
     } catch (error) {
@@ -111,10 +113,11 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
 
           {group && (
               <div>
+                <div className={styles.heading}>
                 <div className={styles.container}>
                   <div className={styles.group_info}>
-                    <p>
-                      <strong>Name:</strong> {group.name}
+                    <p className = {styles.group_info_name}>
+                     {group.name}
                     </p>
                     <p>
                       <strong>Group ID:</strong> {group.groupID}
@@ -124,9 +127,11 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
                     </p>
                   </div>
                 </div>
+                </div>
 
 
                 {group.groupOrderIDs.map((groupOrderID) => (
+                    <OrdersContainer>
 
                     <div key={groupOrderID} className={styles.groupOrdersContainer}>
 
@@ -134,12 +139,10 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
                         <div style={{fontSize: '18px', fontWeight: 'bold'}}>
                           Group Order ID: {groupOrderID}
                         </div>
-                        <button className="btn btn-warning btn-rounded"
-                                data-mdb-ripple-init
-                                data-mdb-ripple-color="light"
-                                onClick={() => handleJoinGroupOrder(groupOrderID, groupOrders[groupOrderID].foodProviderID)}>
-                          Join Group Order
-                        </button>
+                        <DefaultButton text="Join Group Order" style={{margin: 0}}
+                                       onClick={() => handleJoinGroupOrder(groupOrderID, groupOrders[groupOrderID].foodProviderID)}/>
+
+
                       </div>
                       {groupOrders[groupOrderID] && (
                           <div>
@@ -208,14 +211,10 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
                                                     <div
                                                         className="d-grid gap-2 d-md-flex justify-content-md-end">
 
-                                                      <Link
-                                                          to={`/participant/${participant.participantID}`}
-                                                          className="btn btn-warning btn-rounded"
-                                                          data-mdb-ripple-init
-                                                          data-mdb-ripple-color="light"
-                                                      >
-                                                        view
-                                                      </Link>
+
+                                                        <DefaultButton text="View" style={{margin: 0}}
+                                                                       onClick={() => navigate(`/participant/${participant.participantID}`)}/>
+
                                                     </div>
 
                                                   </div>
@@ -236,6 +235,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
                       )}
 
                     </div>
+                    </OrdersContainer>
                 ))}
 
 
@@ -248,3 +248,11 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
 
         );
         }
+
+const OrdersContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+	align-items:center;
+    gap: 2rem;
+	padding:2rem;
+`;

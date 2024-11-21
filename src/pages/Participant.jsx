@@ -13,6 +13,7 @@ function Participant({orderFoodProviderId}) {
     const { participantID } = useParams();
     const { user } = useAuth();
     const [participantOrders, setParticipantOrders] = useState([]);
+    const [participantName, setParticipantName] = useState("");
     const [foodProviders, setFoodProviders] = useState([]);
 	const navigate = useNavigate();
 
@@ -21,6 +22,7 @@ function Participant({orderFoodProviderId}) {
             const response = await fetch(`${resourceUrl}/participants/${participantID}`);
             const data = await response.json();
             setParticipantOrders(data.participantOrders);
+            setParticipantName(data.name);
         } catch (error) {
             console.error("Error fetching participant data:", error);
         }
@@ -73,14 +75,14 @@ function Participant({orderFoodProviderId}) {
             <PageNav />
             <Container>
                 <Header>
-                    <Header1 text={user?.name} style={{ fontSize:'2.25rem', color:'black', padding:'2rem 1rem' }}/>
-					<ButtonContainer>
+                    <Header1 text={participantName} style={{ fontSize:'2.25rem', color:'black', padding:'2rem 1rem' }}/>
+					{user?.name === participantName && <ButtonContainer>
 						{ orderFoodProviderId ? (
 							<DefaultButton text="Add to Order" type="dark" onClick={handleAddToOrderClick}/>
 						) : (
 							<DefaultButton text="Join Group Order" type="dark" onClick={handleJoinGroupOrderClick}/>
 						)}
-                	</ButtonContainer>
+                	</ButtonContainer>}
                 </Header>
 				<Header2 text="Order History" style={{ fontSize:'2rem', color:'black', textAlign:"center", fontFamily: "Alexandria"}}/>
                 <OrdersContainer>
