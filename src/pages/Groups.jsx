@@ -25,10 +25,6 @@ export default function Groups() {
         fetchData();
     }, []);
 
-	const handleViewClick = ({groupID}) => {
-		navigate(`/foodprovider/${groupID}`);
-    };
-
     return (
         <div className={Layout.pageWrapper}>
                 <div className={Layout.mainContent}>
@@ -51,7 +47,7 @@ export default function Groups() {
 
 											<div className="d-grid gap-2 d-md-flex justify-content-md-end">
 												<div className="d-grid gap-2 d-md-flex justify-content-md-end">
-													<DefaultButton text="View" style={{ margin:0}} onClick={() => handleViewClick(group.groupID)}/>
+													<DefaultButton text="View" style={{ margin:0}} onClick={()=> navigate(`/groups/${group.groupID}`)}/>
 												</div>
 
 											</div>

@@ -23,10 +23,6 @@ export default function FoodProviders() {
         }
     };
 
-	const handleViewClick = ({foodProviderID}) => {
-		navigate(`/foodprovider/${foodProviderID}`);
-    };
-
     useEffect(() => {
         fetchData();
     }, []);
@@ -51,7 +47,7 @@ export default function FoodProviders() {
 										}</p>
 										{isAuthenticated && 
 										<div className="d-grid gap-2 d-md-flex justify-content-md-end">
-											<DefaultButton text="View" style={{ margin:0}} onClick={() => handleViewClick(foodProvider.foodProviderID)}/>
+											<DefaultButton text="View" style={{ margin:0 }} onClick={()=> navigate(`/foodprovider/${foodProvider.foodProviderID}`)}/>
 										</div>
 										}
 
