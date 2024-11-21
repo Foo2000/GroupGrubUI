@@ -85,6 +85,7 @@ export default function FoodProvider({ sessionGroupId, sessionGroupOrderId }) {
             <PageNav />
             {foodProvider && (
                 <div>
+                    <div className={styles.heading}>
                     <div className={styles.restaurant_info}>
                         <h1>Food Provider Details</h1>
                         <p><strong>Session Group Id:</strong> {sessionGroupId}</p>
@@ -94,6 +95,7 @@ export default function FoodProvider({ sessionGroupId, sessionGroupOrderId }) {
                         <p><strong>Location:</strong> {foodProvider.location}</p>
                         <p><strong>Phone Number:</strong> {foodProvider.phoneNumber}</p>
                         <p><strong>Hours of Operation:</strong> {foodProvider.hoursOfOperation}</p></div>
+                    </div>
 
 
                     <p className={styles.title}>Menu Item: </p>

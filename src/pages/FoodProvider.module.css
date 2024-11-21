@@ -2,6 +2,11 @@
     --break-point-tablet-lg: 768px;
     --break-point-phone: 480px;
 }
+.heading {
+    display: flex;
+    justify-content: center;
+    margin-top: 15pt;
+}
 .restaurant_info {
     max-width: 591px;
     max-height: 400px;

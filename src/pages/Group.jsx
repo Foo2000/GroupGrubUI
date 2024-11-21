@@ -113,6 +113,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
 
           {group && (
               <div>
+                <div className={styles.heading}>
                 <div className={styles.container}>
                   <div className={styles.group_info}>
                     <p className = {styles.group_info_name}>
@@ -125,6 +126,7 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOr
                       <strong>Administrator ID:</strong> {group.administratorID}
                     </p>
                   </div>
+                </div>
                 </div>
 
 
