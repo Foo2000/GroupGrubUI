@@ -45,6 +45,10 @@ function Participant({orderFoodProviderId}) {
 		}
     };
 
+	const handleJoinGroupOrderClick = () => {
+		navigate(`/groups`);
+    };
+
     useEffect(() => {
         fetchParticipantData();
         fetchFoodProvidersData();
@@ -71,7 +75,11 @@ function Participant({orderFoodProviderId}) {
                 <Header>
                     <Header1 text={user?.name} style={{ fontSize:'2.25rem', color:'black', padding:'2rem 1rem' }}/>
 					<ButtonContainer>
-                        <DefaultButton text="Add to Order" type="dark" onClick={handleAddToOrderClick}/>
+						{ orderFoodProviderId ? (
+							<DefaultButton text="Add to Order" type="dark" onClick={handleAddToOrderClick}/>
+						) : (
+							<DefaultButton text="Join Group Order" type="dark" onClick={handleJoinGroupOrderClick}/>
+						)}
                 	</ButtonContainer>
                 </Header>
 				<Header2 text="Order History" style={{ fontSize:'2rem', color:'black', textAlign:"center", fontFamily: "Alexandria"}}/>
@@ -133,7 +141,7 @@ const Header = styled.div`
 const ButtonContainer = styled.div`
     display: flex;
 	justify-content: space-around;
-    width:18rem;
+    width:20rem;
 `;
 
 const OrdersContainer = styled.div`
