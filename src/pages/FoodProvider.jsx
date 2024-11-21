@@ -4,7 +4,7 @@ import { resourceUrl } from "../config";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../FakeAuthContext";
 
-export default function FoodProvider({ sessionGroupId, sessionGroupOrderId, setOrderFoodProviderId }) {
+export default function FoodProvider({ sessionGroupId, sessionGroupOrderId }) {
     const { foodProviderID } = useParams();
     const [foodProvider, setFoodProvider] = useState();
     const [selectedItems, setSelectedItems] = useState({});
@@ -17,9 +17,6 @@ export default function FoodProvider({ sessionGroupId, sessionGroupOrderId, setO
           const response = await fetch(`${resourceUrl}/foodproviders/${foodProviderID}`);
           const data = await response.json();
           setFoodProvider(data);
-		  if(sessionGroupId!=null && sessionGroupId!="") {
-			setOrderFoodProviderId(foodProvider.foodProviderID)
-		  }
         } catch (error) {
           console.error("Error fetching data:", error);
         }
