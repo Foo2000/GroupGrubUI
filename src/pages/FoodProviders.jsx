@@ -5,8 +5,11 @@ import { Link } from "react-router-dom";
 import styles from "./FoodProviders.module.css";
 import Footer from "../components/common/Footer";
 import Layout from "./Layout.module.css";
+import { useAuth } from "../FakeAuthContext";
+
 export default function FoodProviders() {
     const [foodProviders, setFoodProviders] = useState([]);
+    const { isAuthenticated } = useAuth();
 
     const fetchData = async () => {
         try {
@@ -39,6 +42,7 @@ export default function FoodProviders() {
                                     <p className={styles.provider_info}>location: {foodProvider.location}</p>
                                     <p className={styles.provider_info}>Operation time:{foodProvider.hoursOfOperation
                                     }</p>
+                                    {isAuthenticated && 
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
 
                                         <Link to={`/foodprovider/${foodProvider.foodProviderID}`}
@@ -49,7 +53,7 @@ export default function FoodProviders() {
                                             view
                                         </Link>
                                     </div>
-
+                                    }
 
                                 </div>
                             </div>

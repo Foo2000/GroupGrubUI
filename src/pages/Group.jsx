@@ -7,7 +7,8 @@ import styles from "./Group.module.css"
 import axios from "axios";
 import Footer from "../components/common/Footer";
 import Layout from "./Layout.module.css";
-export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
+
+export default function Group({ setSessionGroupId, setSessionGroupOrderId, setOrderFoodProviderId }) {
   const { groupID } = useParams();
   const [group, setGroup] = useState();
   const [groupOrders, setGroupOrders] = useState({});
@@ -94,9 +95,8 @@ export default function Group({ setSessionGroupId, setSessionGroupOrderId }) {
 
       setSessionGroupId(groupID);
       setSessionGroupOrderId(groupOrderID);
+      setOrderFoodProviderId(groupOrders[groupOrderID].foodProviderID);
       navigate(`/foodprovider/${ FoodProviderID}`)
-
-
 
       fetchGroupData();
     } catch (error) {
