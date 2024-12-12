@@ -108,4 +108,4 @@ Prior to implementing our UI in React, we created a [mockup](https://www.figma.c
 
 ## Live site
 You will be able to access our site online for a limited time. [GroupGrub UI](https://groupgrub-ui-626742743841.us-east1.run.app/)'s live site.
-Meanwhile, the service is live here: [GroupGrub Service](https://34.75.0.140:8081/swagger-ui/index.html)
+Meanwhile, the service is live here: [GroupGrub Service](https://35.185.18.94:8081/swagger-ui/index.html)
